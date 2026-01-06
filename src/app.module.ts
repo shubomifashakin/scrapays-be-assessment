@@ -4,7 +4,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { DatabaseModule } from './core/database/database.module';
-import { AuthModule } from './modules/auth/auth.module';
 import { BooksModule } from './modules/books/books.module';
 
 @Module({
@@ -21,7 +20,6 @@ import { BooksModule } from './modules/books/books.module';
       autoSchemaFile: true,
     }),
     DatabaseModule,
-    AuthModule,
     BooksModule,
   ],
 })
