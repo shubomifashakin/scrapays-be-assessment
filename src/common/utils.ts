@@ -7,6 +7,10 @@ class EnvConfig {
 
   @IsString()
   @IsNotEmpty()
+  FRONTEND_URL: string;
+
+  @IsString()
+  @IsNotEmpty()
   JWT_ISSUER: string;
 
   @IsString()
