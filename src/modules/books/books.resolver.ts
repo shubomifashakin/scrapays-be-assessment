@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { BooksService } from './books.service';
@@ -5,12 +6,11 @@ import { CreateBookDto } from './dtos/create-book.dto';
 import { UpdateBookDto } from './dtos/update-book.dto';
 
 import { Book } from '../../common/entities/books.entity';
-// import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../../common/guards/auth.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 
-//FIXME: NEEDS AUTH AND ROLE GUARD
-// @UseGuards()
 @Roles('ADMIN')
+@UseGuards(AuthGuard)
 @Resolver(() => Book)
 export class BooksResolver {
   constructor(private readonly bookService: BooksService) {}
