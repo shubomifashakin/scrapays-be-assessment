@@ -24,6 +24,7 @@ import { BooksModule } from './modules/books/books.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
+      introspection: true,
       playground: {
         settings: {
           'request.credentials': 'include',
