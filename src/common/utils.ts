@@ -16,6 +16,10 @@ class EnvConfig {
   @IsString()
   @IsNotEmpty()
   JWT_AUDIENCE: string;
+
+  @IsString()
+  @IsNotEmpty()
+  PORT: string;
 }
 
 export function validateConfig(config: Record<string, string>) {
