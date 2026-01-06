@@ -20,6 +20,11 @@ export class BooksResolver {
     return this.bookService.getBook(id);
   }
 
+  @Query(() => [Book], { name: 'books', description: 'Get all books' })
+  getBooks() {
+    return this.bookService.getBooks();
+  }
+
   @Mutation(() => Book, {
     name: 'createBook',
     description: 'Create a new book',

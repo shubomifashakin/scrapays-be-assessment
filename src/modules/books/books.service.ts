@@ -42,4 +42,8 @@ export class BooksService {
   async getBook(id: number) {
     return this.databaseService.book.findUniqueOrThrow({ where: { id } });
   }
+
+  async getBooks() {
+    return this.databaseService.book.findMany();
+  }
 }
