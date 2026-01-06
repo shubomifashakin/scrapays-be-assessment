@@ -4,6 +4,8 @@ import { BooksResolver } from './books.resolver';
 import { BooksService } from './books.service';
 import { DatabaseModule } from '../../core/database/database.module';
 import { DatabaseService } from '../../core/database/database.service';
+import { JwtModule } from '../../core/jwt/jwt.module';
+import { JwtService } from '../../core/jwt/jwt.service';
 
 const mockDatabaseService = {
   book: {
@@ -14,16 +16,26 @@ const mockDatabaseService = {
   },
 };
 
+const mockJwtService = {
+  verify: jest.fn().mockResolvedValue({
+    id: 1,
+    name: 'Test Book',
+    description: 'Test Book Description',
+  }),
+};
+
 describe('BooksResolver', () => {
   let resolver: BooksResolver;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [BooksResolver, BooksService],
-      imports: [DatabaseModule],
+      imports: [DatabaseModule, JwtModule],
     })
       .overrideProvider(DatabaseService)
       .useValue(mockDatabaseService)
+      .overrideProvider(JwtService)
+      .useValue(mockJwtService)
       .compile();
 
     resolver = module.get<BooksResolver>(BooksResolver);

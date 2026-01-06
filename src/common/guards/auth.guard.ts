@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { ConfigService } from '@nestjs/config';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import {
   CanActivate,
@@ -8,18 +7,13 @@ import {
   Logger,
 } from '@nestjs/common';
 
-import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { JwtService } from '../../core/jwt/jwt.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger(AuthGuard.name);
-  private JWKS: ReturnType<typeof createRemoteJWKSet>;
 
-  constructor(private readonly configService: ConfigService) {
-    const issuer = this.configService.get<string>('JWT_ISSUER')!;
-
-    this.JWKS = createRemoteJWKSet(new URL(`${issuer}.well-known/jwks.json`));
-  }
+  constructor(private readonly jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
@@ -34,11 +28,7 @@ export class AuthGuard implements CanActivate {
         return false;
       }
 
-      const { payload } = await jwtVerify(token, this.JWKS, {
-        issuer: this.configService.get<string>('JWT_ISSUER')!,
-        audience: this.configService.get<string>('JWT_AUDIENCE')!,
-        algorithms: ['RS256'],
-      });
+      const payload = await this.jwtService.verify(token);
 
       req.user = payload;
       return true;

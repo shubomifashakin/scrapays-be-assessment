@@ -5,7 +5,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { validateConfig } from './common/utils';
 
+import { JwtModule } from './core/jwt/jwt.module';
 import { DatabaseModule } from './core/database/database.module';
+
 import { BooksModule } from './modules/books/books.module';
 
 @Module({
@@ -30,6 +32,7 @@ import { BooksModule } from './modules/books/books.module';
       autoSchemaFile: true,
     }),
     DatabaseModule,
+    JwtModule,
     BooksModule,
   ],
 })
