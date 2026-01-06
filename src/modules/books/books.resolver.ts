@@ -7,9 +7,7 @@ import { UpdateBookDto } from './dtos/update-book.dto';
 
 import { Book } from '../../common/entities/books.entity';
 import { AuthGuard } from '../../common/guards/auth.guard';
-import { Roles } from '../../common/decorators/roles.decorator';
 
-@Roles('ADMIN')
 @UseGuards(AuthGuard)
 @Resolver(() => Book)
 export class BooksResolver {
